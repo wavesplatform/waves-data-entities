@@ -4,5 +4,8 @@
   "types": "./src/index.ts",
   "dependencies": {
     "bignumber.js": "6.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^2.8.1"
   }
 }

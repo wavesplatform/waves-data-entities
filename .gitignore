@@ -1,4 +1,7 @@
 .idea
+.vscode
+.history
+
 node_modules
 **/*.js
 **/*.js.map
