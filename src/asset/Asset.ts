@@ -1,13 +1,13 @@
 import BigNumber from '../libs/bignumber';
 
-import { IAssetObject, TPrecision } from './interface';
+import { IAssetJSON } from './interface';
 
 export class Asset {
     public readonly ticker: string | null;
 
     public readonly id: string;
     public readonly name: string;
-    public readonly precision: TPrecision;
+    public readonly precision: number;
     public readonly description: string;
 
     public readonly height: number;
@@ -16,7 +16,7 @@ export class Asset {
     public readonly quantity: BigNumber;
     public readonly reissuable: boolean;
 
-    constructor(assetObject: IAssetObject) {
+    constructor(assetObject: IAssetJSON) {
         this.ticker = assetObject.ticker || null;
         this.id = assetObject.id;
         this.name = assetObject.name;
@@ -29,7 +29,7 @@ export class Asset {
         this.reissuable = assetObject.reissuable;
     }
 
-    public toJSON(): IAssetObject {
+    public toJSON(): IAssetJSON {
         return {
             ticker: this.ticker,
             id: this.id,

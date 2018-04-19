@@ -2,10 +2,17 @@
   "name": "waves-data-entities",
   "version": "0.0.0",
   "types": "./src/index.ts",
+  "main": "./dist/index.js",
+  "scripts": {
+    "prepare": "tsc --declaration && yarn browserify",
+    "browserify": "browserify ./dist/index.js -s event-sender -o ./dist/umd.js"
+  },
   "dependencies": {
+    "@waves/assets-pairs-order": "^2.1.0",
     "bignumber.js": "6.0.0"
   },
   "devDependencies": {
+    "browserify": "^16.2.0",
     "typescript": "^2.8.1"
   }
 }

@@ -1,0 +1,34 @@
+import { IMoneyJSON } from './interface';
+import { Asset } from '..';
+import BigNumber from '../libs/bignumber';
+export declare class Money {
+    readonly asset: Asset;
+    private _coins;
+    private _tokens;
+    private constructor();
+    getCoins(): BigNumber;
+    getTokens(): BigNumber;
+    toCoins(): string;
+    toTokens(): string;
+    toFormat(): string;
+    add(money: Money): Money;
+    plus(money: Money): Money;
+    sub(money: Money): Money;
+    minus(money: Money): Money;
+    eq(money: Money): boolean;
+    lt(money: Money): boolean;
+    lte(money: Money): boolean;
+    gt(money: Money): boolean;
+    gte(money: Money): boolean;
+    cloneWithCoins(coins: string | BigNumber): Money;
+    cloneWithTokens(tokens: string | BigNumber): Money;
+    convertTo(asset: Asset, exchangeRate: BigNumber): Money;
+    toJSON(): IMoneyJSON;
+    toString(): string;
+    private _matchAssets(money);
+    static convert(money: Money, asset: Asset, exchangeRate: BigNumber | string): Money;
+    private static _checkAmount(amount);
+    private static _tokensToCoins(tokens, precision);
+    private static _getDivider(precision);
+    static isMoney(object: object): object is Money;
+}
