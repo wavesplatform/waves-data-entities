@@ -1,11 +1,10 @@
-import { IOrderPriceJSON } from './interface';
-import { AssetPair } from '..';
+import { AssetPair } from './AssetPair';
 import BigNumber from '../libs/bignumber';
 
 export interface IOrderPriceJSON {
-  amountAssetId: string;
-  priceAssetId: string;
-  priceTokens: string;
+    amountAssetId: string;
+    priceAssetId: string;
+    priceTokens: string;
 }
 
 export class OrderPrice {
@@ -53,7 +52,9 @@ export class OrderPrice {
     }
 
     public toString(): string {
-        return `${this.toTokens()} ${this.pair.amountAsset.id}/${this.pair.priceAsset.id}`;
+        return `${this.toTokens()} ${this.pair.amountAsset.id}/${
+            this.pair.priceAsset.id
+        }`;
     }
 
     private static _getMatcherDivider(precision: number): BigNumber {

@@ -5,7 +5,7 @@
   "main": "./dist/index.js",
   "scripts": {
     "prepare": "tsc --declaration && yarn browserify",
-    "browserify": "browserify ./dist/index.js -s event-sender -o ./dist/umd.js"
+    "browserify": "browserify ./dist/index.js -s data-entities -o ./dist/umd.js -u bignumber.js"
   },
   "dependencies": {
     "@waves/assets-pairs-order": "^2.1.0",

@@ -1,5 +1,9 @@
-import { Asset } from '..';
-import { IAssetPairJSON } from './interface';
+import { Asset } from './Asset';
+
+export interface IAssetPairJSON {
+    amountAsset: string;
+    priceAsset: string;
+}
 
 import orderPairs from '@waves/assets-pairs-order';
 declare const console: any;

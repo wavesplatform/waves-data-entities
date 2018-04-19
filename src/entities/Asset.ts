@@ -1,6 +1,17 @@
 import BigNumber from '../libs/bignumber';
 
-import { IAssetJSON } from './interface';
+export interface IAssetJSON {
+    readonly ticker?: string;
+    readonly id: string;
+    readonly name: string;
+    readonly precision: number;
+    readonly description: string;
+    readonly height: number;
+    readonly timestamp: Date;
+    readonly sender: string;
+    readonly quantity: BigNumber;
+    readonly reissuable: boolean;
+}
 
 export class Asset {
     public readonly ticker: string | null;

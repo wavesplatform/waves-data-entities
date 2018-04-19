@@ -1,6 +1,10 @@
-import { IMoneyJSON } from './interface';
-import { Asset } from '..';
+import { Asset } from './Asset';
 import BigNumber from '../libs/bignumber';
+
+export interface IMoneyJSON {
+  assetId: string;
+  tokens: string;
+}
 
 export class Money {
     public readonly asset: Asset;
