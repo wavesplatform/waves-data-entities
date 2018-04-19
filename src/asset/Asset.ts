@@ -1,26 +1,46 @@
-import { IAsset, IAssetObject, TPrecision } from './interface';
+import BigNumber from '../libs/bignumber';
 
+import { IAssetObject, TPrecision } from './interface';
 
-export class Asset implements IAsset {
+export class Asset {
+    public readonly ticker: string | null;
 
     public readonly id: string;
     public readonly name: string;
     public readonly precision: TPrecision;
     public readonly description: string;
 
+    public readonly height: number;
+    public readonly timestamp: Date;
+    public readonly sender: string;
+    public readonly quantity: BigNumber;
+    public readonly reissuable: boolean;
+
     constructor(assetObject: IAssetObject) {
+        this.ticker = assetObject.ticker || null;
         this.id = assetObject.id;
         this.name = assetObject.name;
         this.precision = assetObject.precision;
         this.description = assetObject.description;
+        this.height = assetObject.height;
+        this.timestamp = assetObject.timestamp;
+        this.sender = assetObject.sender;
+        this.quantity = assetObject.quantity;
+        this.reissuable = assetObject.reissuable;
     }
 
     public toJSON(): IAssetObject {
         return {
+            ticker: this.ticker,
             id: this.id,
             name: this.name,
             precision: this.precision,
-            description: this.description
+            description: this.description,
+            height: this.height,
+            timestamp: this.timestamp,
+            sender: this.sender,
+            quantity: this.quantity,
+            reissuable: this.reissuable,
         };
     }
 
@@ -28,8 +48,7 @@ export class Asset implements IAsset {
         return this.id;
     }
 
-    public static isAsset(object: object): object is IAsset {
+    public static isAsset(object: object): object is Asset {
         return object instanceof Asset;
     }
-
 }
