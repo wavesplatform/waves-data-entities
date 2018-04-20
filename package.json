@@ -1,14 +1,14 @@
 {
   "name": "waves-data-entities",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "types": "./dist/index.d.ts",
   "main": "./dist/index.js",
   "scripts": {
-    "prepare": "tsc --declaration && yarn browserify",
+    "prepare": "tsc --declaration && npm run browserify",
     "browserify": "browserify ./dist/index.js -s data-entities -o ./dist/umd.js -u bignumber.js"
   },
   "dependencies": {
-    "@waves/assets-pairs-order": "^2.1.0",
+    "@waves/assets-pairs-order": "^3.1.0",
     "bignumber.js": "6.0.0"
   },
   "devDependencies": {

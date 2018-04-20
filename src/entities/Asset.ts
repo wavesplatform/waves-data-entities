@@ -1,4 +1,4 @@
-import BigNumber from '../libs/bignumber';
+import { BigNumber } from '../libs/bignumber';
 
 export interface IAssetJSON {
     readonly ticker?: string;

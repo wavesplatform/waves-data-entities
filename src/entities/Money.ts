@@ -1,5 +1,5 @@
 import { Asset } from './Asset';
-import BigNumber from '../libs/bignumber';
+import { BigNumber } from '../libs/bignumber';
 
 export interface IMoneyJSON {
   assetId: string;

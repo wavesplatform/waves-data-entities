@@ -1,5 +1,5 @@
 import { IAssetPair } from './AssetPair/interface';
-import BigNumber from '../libs/bignumber';
+import { BigNumber } from '../libs/bignumber';
 
 export interface IOrderPriceJSON {
     amountAssetId: string;
