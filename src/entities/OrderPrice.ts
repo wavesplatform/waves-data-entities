@@ -1,4 +1,4 @@
-import { AssetPair } from './AssetPair';
+import { IAssetPair } from './AssetPair/interface';
 import BigNumber from '../libs/bignumber';
 
 export interface IOrderPriceJSON {
@@ -8,7 +8,7 @@ export interface IOrderPriceJSON {
 }
 
 export class OrderPrice {
-    public readonly pair: AssetPair;
+    public readonly pair: IAssetPair;
 
     private _matcherCoins: BigNumber;
     private _tokens: BigNumber;
@@ -16,7 +16,7 @@ export class OrderPrice {
     private static _MATCHER_SCALE = new BigNumber(10).pow(8);
 
     // @todo refactor to accept Money instead of BigNumber
-    constructor(coins: BigNumber, pair: AssetPair) {
+    constructor(coins: BigNumber, pair: IAssetPair) {
         const divider = OrderPrice._getMatcherDivider(pair.precisionDifference);
         this.pair = pair;
         this._matcherCoins = coins;
