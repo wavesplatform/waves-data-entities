@@ -1,10 +1,13 @@
-import { IOrderPrice, IOrderPriceJSON } from './interface';
-import { IAssetPair } from '..';
-import BigNumber from '../libs/bignumber';
+import { IAssetPair } from './AssetPair/interface';
+import { BigNumber } from '../libs/bignumber';
 
+export interface IOrderPriceJSON {
+    amountAssetId: string;
+    priceAssetId: string;
+    priceTokens: string;
+}
 
-export class OrderPrice implements IOrderPrice {
-
+export class OrderPrice {
     public readonly pair: IAssetPair;
 
     private _matcherCoins: BigNumber;
@@ -12,6 +15,7 @@ export class OrderPrice implements IOrderPrice {
 
     private static _MATCHER_SCALE = new BigNumber(10).pow(8);
 
+    // @todo refactor to accept Money instead of BigNumber
     constructor(coins: BigNumber, pair: IAssetPair) {
         const divider = OrderPrice._getMatcherDivider(pair.precisionDifference);
         this.pair = pair;
@@ -43,16 +47,23 @@ export class OrderPrice implements IOrderPrice {
         return {
             amountAssetId: this.pair.amountAsset.id,
             priceAssetId: this.pair.priceAsset.id,
-            priceTokens: this.toTokens()
+            priceTokens: this.toTokens(),
         };
     }
 
     public toString(): string {
-        return `${this.toTokens()} ${this.pair.amountAsset.id}/${this.pair.priceAsset.id}`;
+        return `${this.toTokens()} ${this.pair.amountAsset.id}/${
+            this.pair.priceAsset.id
+        }`;
     }
 
     private static _getMatcherDivider(precision: number): BigNumber {
-        return new BigNumber(10).pow(precision).multipliedBy(OrderPrice._MATCHER_SCALE);
+        return new BigNumber(10)
+            .pow(precision)
+            .multipliedBy(OrderPrice._MATCHER_SCALE);
     }
 
+    public static isOrderPrice(object: object): object is OrderPrice {
+        return object instanceof OrderPrice;
+    }
 }

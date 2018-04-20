@@ -1,4 +1,10 @@
 .idea
+.vscode
+.history
+
+dist/
+
+yarn-error.log
 node_modules
 **/*.js
 **/*.js.map

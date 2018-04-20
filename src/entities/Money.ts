@@ -1,16 +1,20 @@
-import { IMoney, IMoneyJSON } from './interface';
-import { IAsset } from '..';
-import BigNumber from '../libs/bignumber';
+import { Asset } from './Asset';
+import { BigNumber } from '../libs/bignumber';
 
+export interface IMoneyJSON {
+  assetId: string;
+  tokens: string;
+}
 
-export class Money implements IMoney {
-
-    public readonly asset: IAsset;
+export class Money {
+    public readonly asset: Asset;
 
     private _coins: BigNumber;
     private _tokens: BigNumber;
 
-    private constructor(coins: BigNumber, asset: IAsset) {
+    // @todo refactor to accept full 'tokens' instead of 'coins'
+    // to hide precision arithmetic implementation
+    private constructor(coins: BigNumber, asset: Asset) {
         const divider = Money._getDivider(asset.precision);
         this.asset = asset;
         this._coins = coins;
@@ -37,72 +41,73 @@ export class Money implements IMoney {
         return this._tokens.toFormat(this.asset.precision);
     }
 
-    public add(money: IMoney): IMoney {
+    public add(money: Money): Money {
         this._matchAssets(money);
         const inputCoins = money.getCoins();
         const result = this._coins.plus(inputCoins);
         return new Money(result, this.asset);
     }
 
-    public plus(money: IMoney): IMoney {
+    public plus(money: Money): Money {
         return this.add(money);
     }
 
-    public sub(money: IMoney): IMoney {
+    public sub(money: Money): Money {
         this._matchAssets(money);
         const inputCoins = money.getCoins();
         const result = this._coins.minus(inputCoins);
         return new Money(result, this.asset);
     }
 
-    public minus(money: IMoney): IMoney {
+    public minus(money: Money): Money {
         return this.sub(money);
     }
 
-    public eq(money: IMoney): boolean {
+    public eq(money: Money): boolean {
         this._matchAssets(money);
         return this._coins.eq(money.getCoins());
     }
 
-    public lt(money: IMoney): boolean {
+    public lt(money: Money): boolean {
         this._matchAssets(money);
         return this._coins.lt(money.getCoins());
     }
 
-    public lte(money: IMoney): boolean {
+    public lte(money: Money): boolean {
         this._matchAssets(money);
         return this._coins.lte(money.getCoins());
     }
 
-    public gt(money: IMoney): boolean {
+    public gt(money: Money): boolean {
         this._matchAssets(money);
         return this._coins.gt(money.getCoins());
     }
 
-    public gte(money: IMoney): boolean {
+    public gte(money: Money): boolean {
         this._matchAssets(money);
         return this._coins.gte(money.getCoins());
     }
 
-    public cloneWithCoins(coins: string | BigNumber): IMoney {
+    // @todo coins refactor
+    public cloneWithCoins(coins: string | BigNumber): Money {
         Money._checkAmount(coins);
         return new Money(new BigNumber(coins), this.asset);
     }
 
-    public cloneWithTokens(tokens: string | BigNumber): IMoney {
+    public cloneWithTokens(tokens: string | BigNumber): Money {
         Money._checkAmount(tokens);
         const coins = Money._tokensToCoins(tokens, this.asset.precision);
         return new Money(coins, this.asset);
     }
 
-    public convertTo(asset: IAsset, exchangeRate: BigNumber): IMoney {
+    public convertTo(asset: Asset, exchangeRate: BigNumber): Money {
         return Money.convert(this, asset, exchangeRate);
     }
 
     public toJSON(): IMoneyJSON {
         return {
             assetId: this.asset.id,
-            tokens: this.toTokens()
+            tokens: this.toTokens(),
         };
     }
 
@@ -110,26 +115,31 @@ export class Money implements IMoney {
         return `${this.toTokens()} ${this.asset.id}`;
     }
 
-    private _matchAssets(money: IMoney): void {
+    private _matchAssets(money: Money): void {
         if (this.asset.id !== money.asset.id) {
-            throw new Error('You cannot apply arithmetic operations to Money created with different assets');
+            throw new Error(
+                'You cannot apply arithmetic operations to Money created with different assets'
+            );
         }
     }
 
-    public static convert(money: IMoney, asset: IAsset, exchangeRate: BigNumber | string): IMoney {
+    public static convert(
+        money: Money,
+        asset: Asset,
+        exchangeRate: BigNumber | string
+    ): Money {
         if (money.asset === asset) {
             return money;
         } else {
             const difference = money.asset.precision - asset.precision;
             const divider = new BigNumber(10).pow(difference);
             const coins = money.getCoins();
-            const result = coins.multipliedBy(exchangeRate).div(divider).toFixed(0, BigNumber.ROUND_DOWN);
+            const result = coins
+                .multipliedBy(exchangeRate)
+                .div(divider)
+                .toFixed(0, BigNumber.ROUND_DOWN);
             return new Money(new BigNumber(result), asset);
         }
-    }
-
-    public static isMoney(object: object): object is IMoney {
-        return object instanceof Money;
     }
 
     private static _checkAmount(amount: string | BigNumber): void {
@@ -138,7 +148,10 @@ export class Money implements IMoney {
         }
     }
 
-    private static _tokensToCoins(tokens: string | BigNumber, precision: number): BigNumber {
+    private static _tokensToCoins(
+        tokens: string | BigNumber,
+        precision: number
+    ): BigNumber {
         const divider = Money._getDivider(precision);
         tokens = new BigNumber(tokens).toFixed(precision);
         return new BigNumber(tokens).multipliedBy(divider);
@@ -146,5 +159,9 @@ export class Money implements IMoney {
 
     private static _getDivider(precision: number): BigNumber {
         return new BigNumber(10).pow(precision);
+    }
+
+    public static isMoney(object: object): object is Money {
+        return object instanceof Money;
     }
 }
