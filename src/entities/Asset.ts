@@ -1,6 +1,6 @@
 import { BigNumber } from '../libs/bignumber';
 
-export interface IAssetJSON {
+export interface IAssetInfo {
     readonly ticker?: string;
     readonly id: string;
     readonly name: string;
@@ -9,8 +9,12 @@ export interface IAssetJSON {
     readonly height: number;
     readonly timestamp: Date;
     readonly sender: string;
-    readonly quantity: BigNumber;
+    readonly quantity: BigNumber | string | number;
     readonly reissuable: boolean;
+}
+
+export interface IAssetJSON extends IAssetInfo {
+    readonly quantity: number;
 }
 
 export class Asset {
@@ -27,8 +31,14 @@ export class Asset {
     public readonly quantity: BigNumber;
     public readonly reissuable: boolean;
 
-    constructor(assetObject: IAssetJSON) {
+    constructor(assetObject: IAssetInfo) {
+        this.quantity =
+            assetObject.quantity instanceof BigNumber
+                ? assetObject.quantity
+                : new BigNumber(assetObject.quantity);
+
         this.ticker = assetObject.ticker || null;
+
         this.id = assetObject.id;
         this.name = assetObject.name;
         this.precision = assetObject.precision;
@@ -36,7 +46,6 @@ export class Asset {
         this.height = assetObject.height;
         this.timestamp = assetObject.timestamp;
         this.sender = assetObject.sender;
-        this.quantity = assetObject.quantity;
         this.reissuable = assetObject.reissuable;
     }
 
@@ -50,7 +59,7 @@ export class Asset {
             height: this.height,
             timestamp: this.timestamp,
             sender: this.sender,
-            quantity: this.quantity,
+            quantity: this.quantity.toNumber(),
             reissuable: this.reissuable,
         };
     }
