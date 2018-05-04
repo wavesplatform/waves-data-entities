@@ -14,7 +14,7 @@ export interface IAssetInfo {
 }
 
 export interface IAssetJSON extends IAssetInfo {
-    readonly quantity: number;
+    readonly quantity: BigNumber;
 }
 
 export class Asset {
@@ -59,7 +59,7 @@ export class Asset {
             height: this.height,
             timestamp: this.timestamp,
             sender: this.sender,
-            quantity: this.quantity.toNumber(),
+            quantity: this.quantity,
             reissuable: this.reissuable,
         };
     }
