@@ -14,7 +14,7 @@ export class Money {
 
     // @todo refactor to accept full 'tokens' instead of 'coins'
     // to hide precision arithmetic implementation
-    private constructor(coins: BigNumber, asset: Asset) {
+    constructor(coins: BigNumber, asset: Asset) {
         const divider = Money._getDivider(asset.precision);
         this.asset = asset;
         this._coins = coins;
