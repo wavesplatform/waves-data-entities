@@ -14,10 +14,10 @@ export class Money {
 
     // @todo refactor to accept full 'tokens' instead of 'coins'
     // to hide precision arithmetic implementation
-    constructor(coins: BigNumber, asset: Asset) {
+    constructor(coins: BigNumber | string | number, asset: Asset) {
         const divider = Money._getDivider(asset.precision);
         this.asset = asset;
-        this._coins = coins;
+        this._coins = coins instanceof BigNumber ? coins : new BigNumber(coins);
         this._tokens = this._coins.div(divider);
     }
 
@@ -123,11 +123,11 @@ export class Money {
         }
     }
 
-    public static convert(
-        money: Money,
-        asset: Asset,
-        exchangeRate: BigNumber | string
-    ): Money {
+    public static isMoney(object: object): object is Money {
+        return object instanceof Money;
+    }
+
+    public static convert(money: Money, asset: Asset, exchangeRate: BigNumber | string): Money {
         if (money.asset === asset) {
             return money;
         } else {
@@ -148,10 +148,7 @@ export class Money {
         }
     }
 
-    private static _tokensToCoins(
-        tokens: string | BigNumber,
-        precision: number
-    ): BigNumber {
+    private static _tokensToCoins(tokens: string | BigNumber, precision: number): BigNumber {
         const divider = Money._getDivider(precision);
         tokens = new BigNumber(tokens).toFixed(precision);
         return new BigNumber(tokens).multipliedBy(divider);
@@ -159,9 +156,5 @@ export class Money {
 
     private static _getDivider(precision: number): BigNumber {
         return new BigNumber(10).pow(precision);
-    }
-
-    public static isMoney(object: object): object is Money {
-        return object instanceof Money;
     }
 }
