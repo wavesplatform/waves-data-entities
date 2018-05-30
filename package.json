@@ -14,7 +14,7 @@
     "dist"
   ],
   "scripts": {
-    "prepare": "tsc --declaration && npm run browserify",
+    "prepare": "tsc && npm run browserify",
     "browserify": "browserify ./dist/index.js -s data-entities -o ./dist/umd.js -u bignumber.js"
   },
   "dependencies": {

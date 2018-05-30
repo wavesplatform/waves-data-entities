@@ -1,4 +1,4 @@
-import { IAssetInfo } from '../dist/entities/Asset';
+import { IAssetInfo } from './entities/Asset';
 
 
 const storage: IConfig = {
