@@ -144,7 +144,7 @@ export class Money {
 
     public static fromTokens(count: number | string | BigNumber, asset: Asset): Money {
         const tokens = Money._toBigNumber(count);
-        return new Money(tokens.div(new BigNumber(10).pow(asset.precision)), asset);
+        return new Money(tokens.times(new BigNumber(10).pow(asset.precision)), asset);
     }
 
     public static fromCoins(count: number | string | BigNumber, asset: Asset): Money {
