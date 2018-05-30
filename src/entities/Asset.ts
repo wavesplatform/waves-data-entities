@@ -1,4 +1,5 @@
 import { BigNumber } from '../libs/bignumber';
+import { config } from '../config';
 
 export interface IAssetInfo {
     readonly ticker?: string;
@@ -31,7 +32,12 @@ export class Asset {
     public readonly quantity: BigNumber;
     public readonly reissuable: boolean;
 
+    public readonly displayName: string;
+
     constructor(assetObject: IAssetInfo) {
+
+        assetObject = config.get('remapAsset')(assetObject);
+
         this.quantity =
             assetObject.quantity instanceof BigNumber
                 ? assetObject.quantity
@@ -47,6 +53,7 @@ export class Asset {
         this.timestamp = assetObject.timestamp;
         this.sender = assetObject.sender;
         this.reissuable = assetObject.reissuable;
+        this.displayName = assetObject.ticker || assetObject.name;
     }
 
     public toJSON(): IAssetJSON {
