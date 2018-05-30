@@ -15,7 +15,10 @@
   ],
   "scripts": {
     "prepare": "tsc --declaration && npm run browserify",
-    "browserify": "browserify ./dist/index.js -s data-entities -o ./dist/umd.js -u bignumber.js"
+    "browserify": "browserify ./dist/index.js -s data-entities -o ./dist/umd.js -u bignumber.js",
+    "patch": "npm version patch && npm publish && git push",
+    "minor": "npm version minor && npm publish && git push",
+    "major": "npm version major && npm publish && git push"
   },
   "dependencies": {
     "bignumber.js": "7.0.1"
