@@ -1,5 +1,7 @@
 import { Asset } from './Asset';
 import { BigNumber } from '../libs/bignumber';
+import { toBigNumber } from '../utils';
+
 
 export interface IMoneyJSON {
     assetId: string;
@@ -17,7 +19,7 @@ export class Money {
     constructor(coins: BigNumber | string | number, asset: Asset) {
         const divider = Money._getDivider(asset.precision);
         this.asset = asset;
-        this._coins = Money._toBigNumber(coins);
+        this._coins = toBigNumber(coins);
         this._tokens = this._coins.div(divider);
     }
 
@@ -143,16 +145,12 @@ export class Money {
     }
 
     public static fromTokens(count: number | string | BigNumber, asset: Asset): Money {
-        const tokens = Money._toBigNumber(count);
+        const tokens = toBigNumber(count);
         return new Money(tokens.times(new BigNumber(10).pow(asset.precision)), asset);
     }
 
     public static fromCoins(count: number | string | BigNumber, asset: Asset): Money {
         return new Money(count, asset);
-    }
-
-    private static _toBigNumber(some: string | number | BigNumber): BigNumber {
-        return some instanceof BigNumber ? some : new BigNumber(some);
     }
 
     private static _checkAmount(amount: string | BigNumber): void {
