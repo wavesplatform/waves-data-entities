@@ -65,6 +65,16 @@ export class Money {
         return this.sub(money);
     }
 
+    public times(money: Money): Money {
+        this._matchAssets(money);
+        return new Money(this.getTokens().times(money.getTokens()), this.asset);
+    }
+
+    public div(money: Money): Money {
+        this._matchAssets(money);
+        return new Money(this.getTokens().div(money.getTokens()), this.asset);
+    }
+
     public eq(money: Money): boolean {
         this._matchAssets(money);
         return this._coins.eq(money.getCoins());
