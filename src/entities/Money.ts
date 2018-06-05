@@ -40,7 +40,7 @@ export class Money {
     }
 
     public toFormat(): string {
-        return this._tokens.toFormat(this.asset.precision);
+        return this._tokens.toFormat();
     }
 
     public add(money: Money): Money {
