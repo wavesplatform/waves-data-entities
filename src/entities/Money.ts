@@ -135,6 +135,14 @@ export class Money {
         }
     }
 
+    public static max(...moneyList: Array<Money>): Money {
+        return moneyList.reduce((max, money) => max.gte(money) ? max : money);
+    }
+
+    public static min(...moneyList: Array<Money>): Money {
+        return moneyList.reduce((min, money) => min.lte(money) ? min : money);
+    }
+
     public static isMoney(object: object): object is Money {
         return object instanceof Money;
     }
