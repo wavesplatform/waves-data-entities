@@ -7,5 +7,8 @@
     "experimentalDecorators": true,
     "sourceMap": true,
     "lib": ["es2015", "es2016"]
-  }
+  },
+  "include": [
+    "src"
+  ]
 }

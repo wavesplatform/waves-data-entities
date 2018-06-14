@@ -18,13 +18,18 @@
     "browserify": "browserify ./dist/index.js -s data-entities -o ./dist/umd.js -u bignumber.js",
     "patch": "npm version patch && npm publish && git push",
     "minor": "npm version minor && npm publish && git push",
-    "major": "npm version major && npm publish && git push"
+    "major": "npm version major && npm publish && git push",
+    "test": "./node_modules/.bin/tsc -p ./test/tsconfig.json && ./node_modules/.bin/mocha $(find ./tmp -name '*.spec.js')"
   },
   "dependencies": {
     "bignumber.js": "7.0.1"
   },
   "devDependencies": {
+    "@types/chai": "^4.0.4",
+    "@types/mocha": "^2.2.43",
     "browserify": "^16.2.0",
+    "chai": "^4.1.2",
+    "mocha": "^4.0.1",
     "typescript": "^2.8.1"
   }
 }
