@@ -21,6 +21,10 @@ export class Money {
         this.asset = asset;
         this._coins = toBigNumber(coins);
         this._tokens = this._coins.div(divider);
+
+        if (!this._coins.isInteger()) {
+            throw new Error('Coins must be integer!');
+        }
     }
 
     public getCoins(): BigNumber {
