@@ -58,13 +58,17 @@ describe('Money', () => {
 
         });
 
-        it('should throw exception with insignificant digits', () => {
-            expect(() => new Money('1.123', fakeZERO)).to.throw('Coins must be integer!');
-        });
-
         it('should drop insignificant digits', () => {
-            const money8 = new Money(120000000, fakeEIGHT);
-            expect(money8.toFormat()).to.equal('1.2');
+
+            const money0 = new Money('1.123', fakeZERO);
+            expect(money0.toTokens()).to.equal('1');
+            expect(money0.toCoins()).to.equal('1');
+
+            const money8 = new Money('1.123', fakeZERO);
+            expect(money8.toTokens()).to.equal('1');
+            expect(money8.toCoins()).to.equal('1');
+            expect(money8.toFormat()).to.equal('1');
+
         });
 
     });
