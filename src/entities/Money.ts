@@ -8,6 +8,8 @@ export interface IMoneyJSON {
     tokens: string;
 }
 
+export type TMoneyInput = string | number | BigNumber;
+
 export class Money {
     public readonly asset: Asset;
 
@@ -16,7 +18,7 @@ export class Money {
 
     // @todo refactor to accept full 'tokens' instead of 'coins'
     // to hide precision arithmetic implementation
-    constructor(coins: BigNumber | string | number, asset: Asset) {
+    constructor(coins: TMoneyInput, asset: Asset) {
         const divider = Money._getDivider(asset.precision);
         this.asset = asset;
         this._coins = toBigNumber(coins);
@@ -105,19 +107,17 @@ export class Money {
     }
 
     // @todo coins refactor
-    public cloneWithCoins(coins: string | BigNumber): Money {
-        Money._checkAmount(coins);
+    public cloneWithCoins(coins: TMoneyInput): Money {
         return new Money(new BigNumber(coins), this.asset);
     }
 
-    public cloneWithTokens(tokens: string | BigNumber): Money {
-        Money._checkAmount(tokens);
+    public cloneWithTokens(tokens: TMoneyInput): Money {
         const coins = Money._tokensToCoins(tokens, this.asset.precision);
         return new Money(coins, this.asset);
     }
 
-    public convertTo(asset: Asset, exchangeRate: BigNumber): Money {
-        return Money.convert(this, asset, exchangeRate);
+    public convertTo(asset: Asset, exchangeRate: TMoneyInput): Money {
+        return Money.convert(this, asset, toBigNumber(exchangeRate));
     }
 
     public toJSON(): IMoneyJSON {
@@ -166,22 +166,16 @@ export class Money {
         }
     }
 
-    public static fromTokens(count: number | string | BigNumber, asset: Asset): Money {
+    public static fromTokens(count: TMoneyInput, asset: Asset): Money {
         const tokens = toBigNumber(count);
         return new Money(tokens.times(new BigNumber(10).pow(asset.precision)), asset);
     }
 
-    public static fromCoins(count: number | string | BigNumber, asset: Asset): Money {
+    public static fromCoins(count: TMoneyInput, asset: Asset): Money {
         return new Money(count, asset);
     }
 
-    private static _checkAmount(amount: string | BigNumber): void {
-        if (!(typeof amount === 'string' || amount instanceof BigNumber)) {
-            throw new Error('Please use strings to create instances of Money');
-        }
-    }
-
-    private static _tokensToCoins(tokens: string | BigNumber, precision: number): BigNumber {
+    private static _tokensToCoins(tokens: TMoneyInput, precision: number): BigNumber {
         const divider = Money._getDivider(precision);
         tokens = new BigNumber(tokens).toFixed(precision);
         return new BigNumber(tokens).multipliedBy(divider);
