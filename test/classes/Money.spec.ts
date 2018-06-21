@@ -71,6 +71,12 @@ describe('Money', () => {
 
         });
 
+        it('toFormat', () => {
+            const money8 = new Money('123', fakeZERO);
+            expect(money8.toFormat()).to.equal('123');
+            expect(money8.toFormat(1)).to.equal('123.0');
+        });
+
     });
 
     describe('arithmetic operations', () => {

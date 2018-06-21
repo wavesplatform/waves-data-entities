@@ -41,8 +41,8 @@ export class Money {
         return this._tokens.toFixed(this.asset.precision);
     }
 
-    public toFormat(): string {
-        return this._tokens.toFormat();
+    public toFormat(precision?: number): string {
+        return this._tokens.toFormat(precision);
     }
 
     public add(money: Money): Money {
