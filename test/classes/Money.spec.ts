@@ -77,6 +77,23 @@ describe('Money', () => {
             expect(money8.toFormat(1)).to.equal('123.0');
         });
 
+        it('safeSub', () => {
+            const money0 = Money.fromTokens(10, fakeZERO);
+            const money1 = Money.fromTokens(10, fakeZERO);
+            const money2 = Money.fromTokens(10, fakeFOUR);
+
+            expect(money0.safeSub(money2).toFormat()).to.equal('10');
+            expect(money0.safeSub(money1).toFormat()).to.equal('0');
+        });
+
+        it('toNonNegative', () => {
+            const money0 = Money.fromTokens(5, fakeZERO);
+            const money1 = Money.fromTokens(10, fakeZERO);
+
+            expect(money0.sub(money1).toNonNegative().toFormat()).to.equal('0');
+            expect(money0.toNonNegative().toFormat()).to.equal('5');
+        });
+
     });
 
     describe('arithmetic operations', () => {

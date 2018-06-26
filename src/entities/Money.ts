@@ -102,6 +102,20 @@ export class Money {
         return this._coins.gte(money.getCoins());
     }
 
+    public safeSub(money: Money): Money {
+        if (this.asset.id === money.asset.id) {
+            return this.sub(money);
+        }
+        return this;
+    }
+
+    public toNonNegative(): Money {
+        if (this.getTokens().lt(0)) {
+            return this.cloneWithTokens(0);
+        }
+        return this;
+    }
+
     // @todo coins refactor
     public cloneWithCoins(coins: TMoneyInput): Money {
         return new Money(new BigNumber(coins), this.asset);
