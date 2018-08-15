@@ -14,8 +14,9 @@
     "dist"
   ],
   "scripts": {
-    "prepare": "tsc --declaration && npm run browserify",
+    "prepare": "tsc --declaration && npm run browserify && npm run build",
     "browserify": "browserify ./dist/index.js -s data-entities -o ./dist/umd.js -u bignumber.js",
+    "build": "browserify ./dist/index.js -s data-entities -o ./dist/data-entities.js",
     "patch": "npm version patch && npm publish && git push",
     "minor": "npm version minor && npm publish && git push",
     "major": "npm version major && npm publish && git push",
