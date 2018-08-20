@@ -9,7 +9,7 @@
     "url": "https://github.com/wavesplatform/waves-data-entities.git"
   },
   "types": "./dist/index.d.ts",
-  "main": "./dist/index.js",
+  "main": "./dist/data-entities.js",
   "files": [
     "dist"
   ],
