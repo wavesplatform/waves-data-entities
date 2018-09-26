@@ -14,9 +14,9 @@
     "dist"
   ],
   "scripts": {
-    "prepare": "tsc --declaration && npm run browserify && npm run build",
-    "browserify": "browserify ./dist/index.js -s data-entities -o ./dist/umd.js -u bignumber.js",
-    "build": "browserify ./dist/index.js -s data-entities -o ./dist/data-entities.js",
+    "prepare": "tsc --declaration && npm run build && npm run uglify",
+    "uglify": "node_modules/.bin/uglifyjs ./dist/data-entities.js -o ./dist/data-entities.min.js",
+    "build": "./node_modules/.bin/browserify ./dist/index.js --node -s data-entities -o ./dist/data-entities.js",
     "patch": "npm version patch && npm publish && git push",
     "minor": "npm version minor && npm publish && git push",
     "major": "npm version major && npm publish && git push",
@@ -26,11 +26,12 @@
     "bignumber.js": "7.0.1"
   },
   "devDependencies": {
-    "@types/chai": "^4.0.4",
-    "@types/mocha": "^2.2.43",
-    "browserify": "^16.2.0",
+    "@types/chai": "^4.1.5",
+    "@types/mocha": "^5.2.5",
+    "browserify": "^16.2.3",
     "chai": "^4.1.2",
-    "mocha": "^4.0.1",
-    "typescript": "^2.8.1"
+    "mocha": "^5.2.0",
+    "typescript": "^3.0.3",
+    "uglify-js": "^3.4.9"
   }
 }
