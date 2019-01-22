@@ -12,6 +12,7 @@ export interface IAssetInfo {
     readonly sender: string;
     readonly quantity: BigNumber | string | number;
     readonly reissuable: boolean;
+    readonly hasScript: boolean;
 }
 
 export interface IAssetJSON extends IAssetInfo {
@@ -31,6 +32,7 @@ export class Asset {
     public readonly sender: string;
     public readonly quantity: BigNumber;
     public readonly reissuable: boolean;
+    public readonly hasScript: boolean;
 
     public readonly displayName: string;
 
@@ -53,6 +55,7 @@ export class Asset {
         this.timestamp = assetObject.timestamp;
         this.sender = assetObject.sender;
         this.reissuable = assetObject.reissuable;
+        this.hasScript = assetObject.hasScript;
         this.displayName = assetObject.ticker || assetObject.name;
     }
 
@@ -68,6 +71,7 @@ export class Asset {
             sender: this.sender,
             quantity: this.quantity,
             reissuable: this.reissuable,
+            hasScript: this.hasScript
         };
     }
 

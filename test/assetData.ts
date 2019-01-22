@@ -7,7 +7,8 @@ const defaultData = {
     timestamp: new Date('2016-04-12'),
     sender: '3Pxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
     quantity: 1000,
-    reissuable: false
+    reissuable: false,
+    hasScript: true
 };
 
 
