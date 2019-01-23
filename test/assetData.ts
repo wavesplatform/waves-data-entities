@@ -8,7 +8,8 @@ const defaultData = {
     sender: '3Pxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
     quantity: 1000,
     reissuable: false,
-    hasScript: true
+    hasScript: true,
+    minSponsoredFee: 100000
 };
 
 

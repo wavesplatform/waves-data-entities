@@ -16,7 +16,8 @@ describe('Asset', () => {
             name: 'Test No. 1',
             precision: 0,
             reissuable: false,
-            hasScript: true
+            hasScript: true,
+            minSponsoredFee: 100000
         });
 
         defaultAssetInfo2 = getAssetData({
@@ -25,7 +26,8 @@ describe('Asset', () => {
             name: 'Test No. 2',
             precision: 8,
             reissuable: true,
-            hasScript: false
+            hasScript: false,
+            minSponsoredFee: 1
         });
 
     });
