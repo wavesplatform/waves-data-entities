@@ -14,11 +14,12 @@ export interface IAssetInfo {
   readonly quantity: BigNumber | string | number;
   readonly reissuable: boolean;
   readonly hasScript: boolean;
-  readonly minSponsoredFee: number;
+  readonly minSponsoredFee: BigNumber | string | number;
 }
 
 export interface IAssetJSON extends IAssetInfo {
   readonly quantity: BigNumber;
+  readonly minSponsoredFee: BigNumber;
 }
 
 export class Asset {
@@ -35,7 +36,7 @@ export class Asset {
   public readonly quantity: BigNumber;
   public readonly reissuable: boolean;
   public readonly hasScript: boolean;
-  public readonly minSponsoredFee: number;
+  public readonly minSponsoredFee: BigNumber;
 
   public readonly displayName: string;
 
@@ -43,6 +44,7 @@ export class Asset {
     assetObject = config.get('remapAsset')(assetObject);
 
     this.quantity = toBigNumber(assetObject.quantity);
+    this.minSponsoredFee = toBigNumber(assetObject.minSponsoredFee);
 
     this.ticker = assetObject.ticker || null;
 
@@ -55,7 +57,7 @@ export class Asset {
     this.sender = assetObject.sender;
     this.reissuable = assetObject.reissuable;
     this.hasScript = assetObject.hasScript;
-    this.minSponsoredFee = assetObject.minSponsoredFee;
+    
     this.displayName = assetObject.ticker || assetObject.name;
   }
 
