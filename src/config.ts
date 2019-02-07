@@ -1,8 +1,10 @@
 import { IAssetInfo } from './entities/Asset';
+import { ICandleInfo } from './entities/Candle';
 
 
 const storage: IConfig = {
-    remapAsset: (data: IAssetInfo) => data
+    remapAsset: (data: IAssetInfo) => data,
+    remapCandle: (data: ICandleInfo) => data
 };
 
 export namespace config {
@@ -26,4 +28,5 @@ export namespace config {
 
 export interface IConfig {
     remapAsset: (asset: IAssetInfo) => IAssetInfo;
+    remapCandle: (candle: ICandleInfo) => ICandleInfo;
 }
