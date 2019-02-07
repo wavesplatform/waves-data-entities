@@ -50,18 +50,9 @@ export class Candle {
       'weightedAveragePrice',
     ];
 
-    for (const key in bigNumbers) {
-      this[key] = toBigNumber(candleObject[key]);
-    }
+    bigNumbers.forEach(key => (this[key] = toBigNumber(candleObject[key])));
 
     this.time = candleObject.time;
-    this.open = candleObject.open;
-    this.close = candleObject.close;
-    this.high = candleObject.high;
-    this.low = candleObject.low;
-    this.volume = candleObject.volume;
-    this.quoteVolume = candleObject.quoteVolume;
-    this.weightedAveragePrice = candleObject.weightedAveragePrice;
     this.maxHeight = candleObject.maxHeight;
     this.txsCount = candleObject.txsCount;
   }
