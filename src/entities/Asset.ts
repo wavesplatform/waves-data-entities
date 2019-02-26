@@ -35,7 +35,7 @@ export class Asset {
     public readonly sender: string;
     public readonly quantity: BigNumber;
     public readonly reissuable: boolean;
-    public readonly hasScript: boolean | null;
+    public readonly hasScript: boolean;
     public readonly minSponsoredFee: BigNumber | null;
 
     public readonly displayName: string;
@@ -57,7 +57,7 @@ export class Asset {
         this.timestamp = assetObject.timestamp;
         this.sender = assetObject.sender;
         this.reissuable = assetObject.reissuable;
-        this.hasScript = assetObject.hasScript || null;
+        this.hasScript = assetObject.hasScript || false;
         this.displayName = assetObject.ticker || assetObject.name;
     }
 
