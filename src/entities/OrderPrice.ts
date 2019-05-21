@@ -1,6 +1,5 @@
-import { BigNumber } from '../libs/bignumber';
+import { BigNumber } from '@waves/bignumber';
 import { AssetPair } from './AssetPair';
-import { Asset } from './Asset';
 import { toBigNumber } from '../utils';
 
 export interface IOrderPriceJSON {
@@ -26,11 +25,11 @@ export class OrderPrice {
     }
 
     public getMatcherCoins(): BigNumber {
-        return this._matcherCoins.plus(0);
+        return this._matcherCoins.clone();
     }
 
     public getTokens(): BigNumber {
-        return this._tokens.plus(0);
+        return this._tokens.clone();
     }
 
     public toMatcherCoins(): string {
@@ -68,14 +67,14 @@ export class OrderPrice {
         OrderPrice._checkAmount(tokens);
         tokens = toBigNumber(tokens).toFixed(pair.priceAsset.precision);
         const divider = OrderPrice._getMatcherDivider(pair.precisionDifference);
-        const coins = new BigNumber(tokens).times(divider);
+        const coins = new BigNumber(tokens).mul(divider);
         return new OrderPrice(coins, pair);
     }
 
     private static _getMatcherDivider(precision: number): BigNumber {
         return new BigNumber(10)
             .pow(precision)
-            .multipliedBy(OrderPrice._MATCHER_SCALE);
+            .mul(OrderPrice._MATCHER_SCALE);
     }
 
     public static isOrderPrice(object: object): object is OrderPrice {

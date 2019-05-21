@@ -1,4 +1,4 @@
-import { BigNumber } from './libs/bignumber';
+import { BigNumber } from '@waves/bignumber';
 
 
 export function toBigNumber(some: string | number | BigNumber): BigNumber {

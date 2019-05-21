@@ -1,4 +1,4 @@
-import { BigNumber } from '../libs/bignumber';
+import { BigNumber } from '@waves/bignumber';
 import { config } from '../config';
 import { toBigNumber } from '../utils';
 
