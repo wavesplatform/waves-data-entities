@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { getAssetData } from '../assetData';
-import { BigNumber } from '../../dist/libs/bignumber';
+import { BigNumber } from '@waves/bignumber';
 import { Asset, AssetPair, OrderPrice } from '../../dist';
 
 

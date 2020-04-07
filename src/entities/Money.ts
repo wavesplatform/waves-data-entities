@@ -1,5 +1,5 @@
 import { Asset } from './Asset';
-import { BigNumber } from '../libs/bignumber';
+import { BigNumber } from '@waves/bignumber';
 import { toBigNumber } from '../utils';
 
 
@@ -21,16 +21,16 @@ export class Money {
     constructor(coins: TMoneyInput, asset: Asset) {
         const divider = Money._getDivider(asset.precision);
         this.asset = asset;
-        this._coins = toBigNumber(coins).dp(0);
+        this._coins = toBigNumber(coins).roundTo(0);
         this._tokens = this._coins.div(divider);
     }
 
     public getCoins(): BigNumber {
-        return this._coins.plus(0);
+        return this._coins.add(0);
     }
 
     public getTokens(): BigNumber {
-        return this._tokens.plus(0);
+        return this._tokens.add(0);
     }
 
     public toCoins(): string {
@@ -48,7 +48,7 @@ export class Money {
     public add(money: Money): Money {
         this._matchAssets(money);
         const inputCoins = money.getCoins();
-        const result = this._coins.plus(inputCoins);
+        const result = this._coins.add(inputCoins);
         return new Money(result, this.asset);
     }
 
@@ -59,7 +59,7 @@ export class Money {
     public sub(money: Money): Money {
         this._matchAssets(money);
         const inputCoins = money.getCoins();
-        const result = this._coins.minus(inputCoins);
+        const result = this._coins.sub(inputCoins);
         return new Money(result, this.asset);
     }
 
@@ -69,7 +69,7 @@ export class Money {
 
     public times(money: Money): Money {
         this._matchAssets(money);
-        return new Money(this.getTokens().times(money.getTokens()), this.asset);
+        return new Money(this.getTokens().mul(money.getTokens()), this.asset);
     }
 
     public div(money: Money): Money {
@@ -169,16 +169,17 @@ export class Money {
             const divider = new BigNumber(10).pow(difference);
             const coins = money.getCoins();
             const result = coins
-                .multipliedBy(exchangeRate)
+                .mul(exchangeRate)
                 .div(divider)
-                .toFixed(0, BigNumber.ROUND_DOWN);
+                .roundTo(0, BigNumber.ROUND_MODE.ROUND_DOWN)
+                .toFixed();
             return new Money(new BigNumber(result), asset);
         }
     }
 
     public static fromTokens(count: TMoneyInput, asset: Asset): Money {
         const tokens = toBigNumber(count);
-        return new Money(tokens.times(new BigNumber(10).pow(asset.precision)), asset);
+        return new Money(tokens.mul(new BigNumber(10).pow(asset.precision)), asset);
     }
 
     public static fromCoins(count: TMoneyInput, asset: Asset): Money {
@@ -188,7 +189,7 @@ export class Money {
     private static _tokensToCoins(tokens: TMoneyInput, precision: number): BigNumber {
         const divider = Money._getDivider(precision);
         tokens = new BigNumber(tokens).toFixed(precision);
-        return new BigNumber(tokens).multipliedBy(divider);
+        return new BigNumber(tokens).mul(divider);
     }
 
     private static _getDivider(precision: number): BigNumber {
