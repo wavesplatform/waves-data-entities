@@ -69,12 +69,12 @@ export class Money {
 
     public times(money: Money): Money {
         this._matchAssets(money);
-        return new Money(this.getTokens().mul(money.getTokens()), this.asset);
+        return new Money(this.getCoins().mul(money.getCoins()), this.asset);
     }
 
     public div(money: Money): Money {
         this._matchAssets(money);
-        return new Money(this.getTokens().div(money.getTokens()), this.asset);
+        return new Money(this.getCoins().div(money.getCoins()), this.asset);
     }
 
     public eq(money: Money): boolean {
