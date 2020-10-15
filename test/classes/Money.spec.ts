@@ -86,6 +86,24 @@ describe('Money', () => {
             expect(money0.safeSub(money1).toFormat()).to.equal('0');
         });
 
+        it('times', () => {
+            const money0 = Money.fromTokens(2, fakeZERO);
+            const money1 = Money.fromTokens(4, fakeZERO);
+            const money2 = Money.fromTokens(5, fakeZERO);
+
+            expect(money0.times(money2).toFormat()).to.equal('10');
+            expect(money0.times(money1).toFormat()).to.equal('8');
+        });
+
+        it('div', () => {
+            const money0 = Money.fromTokens(10, fakeZERO);
+            const money1 = Money.fromTokens(5, fakeZERO);
+            const money2 = Money.fromTokens(2, fakeZERO);
+
+            expect(money0.div(money2).toFormat()).to.equal('5');
+            expect(money0.div(money1).toFormat()).to.equal('2');
+        });
+
         it('toNonNegative', () => {
             const money0 = Money.fromTokens(5, fakeZERO);
             const money1 = Money.fromTokens(10, fakeZERO);
