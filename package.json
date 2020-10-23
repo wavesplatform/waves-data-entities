@@ -22,7 +22,7 @@
     "test": "./node_modules/.bin/tsc -p ./test/tsconfig.json && ./node_modules/.bin/mocha $(find ./tmp -name '*.spec.js')"
   },
   "dependencies": {
-    "@waves/bignumber": "^1.0.0"
+    "@waves/bignumber": "^1.1.0"
   },
   "devDependencies": {
     "@types/chai": "^4.1.5",
