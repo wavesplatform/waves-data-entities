@@ -21,7 +21,7 @@ export class Money {
     constructor(coins: TMoneyInput, asset: Asset) {
         const divider = Money._getDivider(asset.precision);
         this.asset = asset;
-        this._coins = toBigNumber(coins).roundTo(0);
+        this._coins = toBigNumber(coins).roundTo(0, BigNumber.ROUND_MODE.ROUND_FLOOR);
         this._tokens = this._coins.div(divider);
     }
 

@@ -42,6 +42,14 @@ describe('Money', () => {
             expect(Asset.isAsset(money.asset)).to.be.true;
         });
 
+        it('round floor', () => {
+            const money1 = new Money(19.9, fakeZERO);
+            const money2 = Money.fromTokens(1.56, money1.asset);
+            expect(money1.toCoins()).to.equal('19');
+            expect(money1.toTokens()).to.equal('19');
+            expect(money2.toCoins()).to.equal('1');
+        });
+
     });
 
     describe('core functionality', () => {
